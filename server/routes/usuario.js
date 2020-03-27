@@ -2,10 +2,10 @@ const express = require('express');
 const Usuario = require('../models/usuario'); //nomeclatura
 const bcrypt = require('bcrypt');
 const _ = require('underscore'); //"_" es estandar
-
+const { verificaToken, verificaAdminRole } = require('../middlewares/autenticacion');
 const app = express();
 
-app.get('/usuario', function(req, res) { //trae registros activos
+app.get('/usuario', verificaToken, (req, res) => { //trae registros activos
 
 
     let desde = req.query.desde || 0;
@@ -33,7 +33,7 @@ app.get('/usuario', function(req, res) { //trae registros activos
         });
 });
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificaToken, verificaAdminRole], (req, res) => {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -60,7 +60,7 @@ app.post('/usuario', (req, res) => {
 
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRole], function(req, res) {
 
     let id = req.params.id;
 
@@ -91,7 +91,7 @@ app.delete('/usuario/:id', function(req, res) {
 
 });
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdminRole], function(req, res) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']); //filtra y crear un objeto
