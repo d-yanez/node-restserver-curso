@@ -12,19 +12,19 @@ app.post('/login', (req, res) => {
     Usuario.findOne({ email: body.email }, (err, usuarioDB) => { //si existe correo válido
 
         if (err) {
-            console.log(body.password);
-            return res.status(400).json({ ok: false, err });
+
+            return res.status(500).json({ ok: false, err });
         }
 
         if (!usuarioDB) {
-            if (err) {
-                return res.status(400).json({
-                    ok: false,
-                    err: {
-                        message: 'Usuario o contraseña incorrectos'
-                    }
-                })
-            }
+
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Usuario o contraseña incorrectos'
+                }
+            });
+
         }
         if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
 
@@ -45,6 +45,8 @@ app.post('/login', (req, res) => {
         }); // se guarda en localStorage y dejar para proximas peticiones
 
     });
+
+
 
 });
 
