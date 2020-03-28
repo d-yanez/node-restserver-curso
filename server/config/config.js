@@ -2,7 +2,7 @@
 // Puerto
 //===============
 
-process.env.PORT = process.env.PORT || 3000;
+process.env.PORT = process.env.PORT || 4200;
 
 //===============
 // Entorno
@@ -41,3 +41,9 @@ process.env.CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN || 60 * 60 * 24 * 30;
 //===============
 
 process.env.SEED = process.env.SEED || 'secret';
+
+
+//===============
+// Google Client ID
+//===============
+process.env.CLIENT_ID = process.env.CLIENT_ID || '10723481191-2fb5p0vq93qqlsclo1ejc7iuk7b3uio7.apps.googleusercontent.com';
